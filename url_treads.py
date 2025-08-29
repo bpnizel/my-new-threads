@@ -24,7 +24,7 @@ def main():
     threads_returns = []
     thread_list = []
     for i, url in enumerate(urls):
-       thread = threading.Thread(target=downloader,args=(url, i, threads_returns ))
+       thread = threading.Thread(target=downloader,args=(url, i, threads_returns, ))
        thread.start()
        thread_list.append(thread)
     
