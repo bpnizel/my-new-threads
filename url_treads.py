@@ -1,14 +1,15 @@
 import threading
 import time
 import requests
-import random
+
 
 def downloader(url: str, thread_index: int, returns: list):
-    sleep_second = random.randint(0, 8)
-    time.sleep(sleep_second)
+    start = time.time()
     requests.get(url).json()
-    print(str(thread_index) + ". thread: " + url + ", slept " + str(sleep_second) + " seconds")
-    returns.append(sleep_second)
+    end = time.time()
+    result_time = end - start
+    print(str(thread_index) + ". thread: " + url + " took, " + str(result_time) + " seconds")
+    returns.append(result_time)
 
 
 
@@ -24,7 +25,7 @@ def main():
     threads_returns = []
     thread_list = []
     for i, url in enumerate(urls):
-       thread = threading.Thread(target=downloader,args=(url, i, threads_returns ))
+       thread = threading.Thread(target=downloader,args=(url, i, threads_returns, ))
        thread.start()
        thread_list.append(thread)
     
@@ -34,7 +35,6 @@ def main():
 
     
 if __name__ == "__main__":
-    start = time.time()
     main()
-    end = time.time() 
-    print("Total time:" + str(end - start))
+    
+
